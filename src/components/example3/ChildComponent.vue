@@ -2,12 +2,21 @@
 <template>
   <div>
     <p>{{ message }}</p>
-    <button @click="$emit('custom-event', 'Hello from child')">Send Event</button>
+    <button @click="sendEvent">Send Event</button>
   </div>
 </template>
 
-<script>
-export default {
-  props: ['message']
+<script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
+defineProps<{
+  message: string;
+}>();
+
+const emit = defineEmits<{
+  (e: 'custom-event', payload: string): void;
+}>();
+
+const sendEvent = () => {
+  emit('custom-event', 'Hello from child');
 };
 </script>
