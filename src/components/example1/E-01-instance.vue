@@ -2,15 +2,18 @@
   <div>Hello, {{ message }}</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+export default  defineComponent({
   name: "E01Instance",
-  data() {
+  setup() {
+    const message = ref('Vue');
     return {
-      message: "Vue!"
+      message
     };
   }
-};
+});
 </script>
 
 <style scoped>
