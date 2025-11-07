@@ -1,12 +1,18 @@
 <template>
-  <div>
-    <input v-model="message" />
-    <p>{{ message }}</p>
-  </div>
+  <E03Binding />
 </template>
 
-<script setup lang="ts">
-import { ref } from "vue";
+<script lang="ts">
+import { defineComponent } from 'vue';
+import E03Binding from "@/components/example1/E-03-binding.vue";
 
-const message = ref("Hello Vue");
+export default defineComponent({
+  name: 'App',
+  components: {
+    E03Binding
+  }
+});
 </script>
+
+<style>
+</style>
