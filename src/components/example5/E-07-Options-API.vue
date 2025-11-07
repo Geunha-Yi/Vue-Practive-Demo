@@ -10,81 +10,62 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'E07OptionsApi',
+<script setup lang="ts">
+import { ref, computed, watch, onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted, defineProps } from 'vue';
 
-  props: {
-    title: {
-      type: String,
-      default: 'User Information'
-    }
-  },
+const props = defineProps<{
+  title?: string;
+}>();
 
-  data() {
-    return {
-      firstName: 'John',
-      lastName: 'Doe',
-      greetCount: 0,
-      message: ''
-    };
-  },
+const title = props.title ?? 'User Information';
+const firstName = ref('John');
+const lastName = ref('Doe');
+const greetCount = ref(0);
+const message = ref('');
 
-  computed: {
-    fullName() {
-      return `${this.firstName} ${this.lastName}`;
-    }
-  },
+const fullName = computed(() => `${firstName.value} ${lastName.value}`);
 
-  methods: {
-    greet() {
-      this.greetCount++;
-      this.message = `Hello, ${this.fullName}!`;
-    },
-    resetGreetCount() {
-      this.greetCount = 0;
-    }
-  },
-
-  watch: {
-    greetCount(newValue, oldValue) {
-      console.log(`Greet count changed from ${oldValue} to ${newValue}`);
-      if (newValue >= 3) {
-        this.message = "That's enough greetings for now!";
-      }
-    }
-  },
-
-  beforeCreate() {
-    console.log('beforeCreate hook');
-  },
-
-  created() {
-    console.log('created hook');
-  },
-
-  beforeMount() {
-    console.log('beforeMount hook');
-  },
-
-  mounted() {
-    console.log('mounted hook');
-  },
-
-  beforeUpdate() {
-    console.log('beforeUpdate hook');
-  },
-
-  updated() {
-    console.log('updated hook');
-  },
-
-  beforeUnmount() {
-    console.log('beforeUnmount hook');
-  },
-
-  unmounted() {
-    console.log('unmounted hook');
-  }
+const greet = () => {
+  greetCount.value++;
+  message.value = `Hello, ${fullName.value}!`;
 };
+
+const resetGreetCount = () => {
+  greetCount.value = 0;
+};
+
+watch(greetCount, (newValue, oldValue) => {
+  console.log(`Greet count changed from ${oldValue} to ${newValue}`);
+  if (newValue >= 3) {
+    message.value = "That's enough greetings for now!";
+  }
+});
+
+// Note: beforeCreate와 created는 Composition API에서 지원되지 않습니다.
+// setup 함수 자체가 이 두 훅의 역할을 수행합니다.
+console.log('setup (beforeCreate/created equivalent)');
+
+onBeforeMount(() => {
+  console.log('beforeMount hook');
+});
+
+onMounted(() => {
+  console.log('mounted hook');
+});
+
+onBeforeUpdate(() => {
+  console.log('beforeUpdate hook');
+});
+
+onUpdated(() => {
+  console.log('updated hook');
+});
+
+onBeforeUnmount(() => {
+  console.log('beforeUnmount hook');
+});
+
+onUnmounted(() => {
+  console.log('unmounted hook');
+});
 </script>
